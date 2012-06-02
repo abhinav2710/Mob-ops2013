@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Saarang Guide</string>
+    <string name="app_name">Saarang Guide</string>
+    <string name="menu_fav">Favourite</string>
+    <string name="menu_view">View Details</string>
+    <string name="menu_call">Call Coordinator</string>
+
+</resources>
