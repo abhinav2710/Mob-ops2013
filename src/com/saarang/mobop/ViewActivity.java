@@ -1,6 +1,8 @@
 package com.saarang.mobop;
 
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -8,8 +10,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +30,8 @@ public class ViewActivity extends Activity implements OnGestureListener {
 	private static final int SWIPE_MAX_OFF_PATH = 250;
 	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 	private GestureDetector gestureDetector;
+	String calName; 
+	String calId; 
 	
 
 	@SuppressWarnings("deprecation")
@@ -36,7 +40,27 @@ public class ViewActivity extends Activity implements OnGestureListener {
 		// TODO Auto-generated method stub
 		gestureDetector = new GestureDetector(this);
 		Log.i(TAG, "Gesture Detector " + this.getClass());
-			
+		
+	/*Calendar  Retrieving
+		String[] projection = new String[] { "_id", "name" };
+		Uri calendars = Uri.parse("content://calendar/calendars");
+		     
+		Cursor managedCursor =
+				   managedQuery(calendars, projection,
+				   "selected=1", null, null);
+		
+		if (managedCursor.moveToFirst()) {
+			 
+			 int nameColumn = managedCursor.getColumnIndex("name"); 
+			 int idColumn = managedCursor.getColumnIndex("_id");
+			 do {
+			    calName = managedCursor.getString(nameColumn);
+			    calId = managedCursor.getString(idColumn);
+			 } while (managedCursor.moveToNext());
+			}
+	/*Calendar info retriving done*/
+	
+		
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "View Created " + this.getClass());
 		
@@ -67,7 +91,7 @@ public class ViewActivity extends Activity implements OnGestureListener {
 			Log.i(TAG, " event managed " + this.getClass());
 			String temp=event.getString(event.getColumnIndexOrThrow(EventDbAdapter.KEY_FAV));
 			Log.i(TAG, " temp created " + this.getClass());
-			if(temp.contentEquals("1"))
+			if(temp.contentEquals("0"))
 			{
 				Log.i(TAG, " if enterd created " + this.getClass());
 				favbtn.setEnabled(true);
@@ -105,6 +129,19 @@ public class ViewActivity extends Activity implements OnGestureListener {
 		
 		});
 		
+		
+		favbtn.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View view) {
+				if (mRowId!=null) {
+					//
+					
+				}
+				
+			}
+		
+		});
+		
 		super.onCreate(savedInstanceState);
 		
 	}
@@ -135,35 +172,18 @@ public class ViewActivity extends Activity implements OnGestureListener {
     }
 	public void callnext(int n){
 		
-	/*	try {
-			
-			if(mRowId+n>4)
-				
-			if(mRowId+n<0)
-				i.putExtra(EventDbAdapter.KEY_ROWID, (long)(4));
-			else
-				i.putExtra(EventDbAdapter.KEY_ROWID, (long)(mRowId+n));
-			
-			
-			
-		} catch (ActivityNotFoundException activityException) {
-			Log.e(TAG, "Call failed");
-		}*/
 		Intent i = new Intent(this, ViewActivity.class);
 		if(n==1)
 		{
 			if(mRowId==5){
-			i.putExtra(EventDbAdapter.KEY_ROWID, (long)(1));
-			startActivityForResult(i, 0);
-			overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+				i.putExtra(EventDbAdapter.KEY_ROWID, (long)(1));
 			}
 			else
 			{
 				i.putExtra(EventDbAdapter.KEY_ROWID, (long)(mRowId+1));
-				startActivityForResult(i, 0);
-				overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
-				
 			}
+			startActivityForResult(i, 0);
+			overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
 		}
 		else if(n==-1)
 		{
@@ -171,15 +191,13 @@ public class ViewActivity extends Activity implements OnGestureListener {
 				
 			{
 				i.putExtra(EventDbAdapter.KEY_ROWID, (long)(5));
-				startActivityForResult(i, 0);
-				overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
 			}
 			else
 			{
 				i.putExtra(EventDbAdapter.KEY_ROWID, (long)(mRowId-1));
-				startActivityForResult(i, 0);
-				overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
 			}
+			startActivityForResult(i, 0);
+			overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
 		}
 		
 		
