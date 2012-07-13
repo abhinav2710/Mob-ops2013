@@ -129,7 +129,7 @@ public class ViewActivity extends Activity implements OnGestureListener {
 					        .putExtra(Events.TITLE, name);
 					        //.putExtra(Events.DESCRIPTION, "Description")
 					        //.putExtra(Events.EVENT_LOCATION, "Location")
-					        
+					        //.putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
 					startActivity(intent);
 					
 					
